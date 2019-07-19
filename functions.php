@@ -53,7 +53,7 @@ add_action( 'login_enqueue_scripts', function() {
     ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
-            background-image: url(<?php echo $logo; ?>);
+            background-image: url(<?php echo $logo[0]; ?>);
                 height:60px;
                 width:320px;
                 background-size: contain;
