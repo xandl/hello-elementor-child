@@ -68,4 +68,7 @@ add_filter( 'login_headerurl', function() {
     return home_url();
 });
 
+foreach(glob(__DIR__."/functions.d/*.php") as $include) {
+	require_once($include);
+}
 
