@@ -21,20 +21,37 @@ add_action( 'wp_enqueue_scripts', function() {
         filemtime(__DIR__.'/scripts.js')
     );
 
+    foreach(glob(__DIR__."/functions.d/*.css") as $include) {
+	    wp_enqueue_style( 'ran-style-'.basename($include),
+		get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
+		array( $parent_style, 'ran-style' ),
+		filemtime($include)
+	    );
+    }
+    foreach(glob(__DIR__."/functions.d/*.js") as $include) {
+	    wp_enqueue_script(
+		'ran-script-'.basename($include),
+		get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
+		array( 'jquery', 'ran-script' ),
+		filemtime($include)
+	    );
+    }
+
+
 });
 
 
 // use the accent-color in theme customizer for Mobile Browser-Header color
 add_action('wp_head', function() {
-    $scheme_colors = get_option('elementor_scheme_color');
-    $accent = $scheme_colors[4];
-    $primary = $scheme_colors[1];
+	$scheme_colors = get_option('elementor_scheme_color');
+	$accent = $scheme_colors[4];
+	$primary = $scheme_colors[1];
 
-    echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
-    echo '<meta name="theme-color" content="' . $primary. '">';
-    echo '<meta name="msapplication-navbutton-color" content="' . $primary. '">';
-    echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $primary. '">';
-    echo "<style>a { color: $primary} a:hover, a:active { color: $accent} .woocommerce div.product p.price,.woocommerce div.product span.price, .woocommerce div.product .stock, .woocommerce ul.products li.product .price, #add_payment_method .cart-collaterals .cart_totals .discount td,.woocommerce-cart .cart-collaterals .cart_totals .discount td,.woocommerce-checkout .cart-collaterals .cart_totals .discount td {color: $accent; } .woocommerce span.onsale { background-color: $accent } .woocommerce-store-notice,p.demo_store, .woocommerce #respond input#submit.alt,.woocommerce a.button.alt,.woocommerce button.button.alt,.woocommerce input.button.alt, .woocommerce #respond input#submit.alt.disabled,.woocommerce #respond input#submit.alt.disabled:hover,.woocommerce #respond input#submit.alt:disabled,.woocommerce #respond input#submit.alt:disabled:hover,.woocommerce #respond input#submit.alt:disabled[disabled],.woocommerce #respond input#submit.alt:disabled[disabled]:hover,.woocommerce a.button.alt.disabled,.woocommerce a.button.alt.disabled:hover,.woocommerce a.button.alt:disabled,.woocommerce a.button.alt:disabled:hover,.woocommerce a.button.alt:disabled[disabled],.woocommerce a.button.alt:disabled[disabled]:hover,.woocommerce button.button.alt.disabled,.woocommerce button.button.alt.disabled:hover,.woocommerce button.button.alt:disabled,.woocommerce button.button.alt:disabled:hover,.woocommerce button.button.alt:disabled[disabled],.woocommerce button.button.alt:disabled[disabled]:hover,.woocommerce input.button.alt.disabled,.woocommerce input.button.alt.disabled:hover,.woocommerce input.button.alt:disabled,.woocommerce input.button.alt:disabled:hover,.woocommerce input.button.alt:disabled[disabled],.woocommerce input.button.alt:disabled[disabled]:hover, .woocommerce .widget_price_filter .ui-slider .ui-slider-handle, .woocommerce .widget_price_filter .ui-slider .ui-slider-range  {  background-color: $primary } .woocommerce-error,.woocommerce-info,.woocommerce-message {  border-top: $primary } .woocommerce #respond input#submit.alt:hover,.woocommerce a.button.alt:hover,.woocommerce button.button.alt:hover,.woocommerce input.button.alt:hover  { background-color: $accent; } .attribute_buttons .button.active {background: $accent;} </style>";
+	echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+	echo '<meta name="theme-color" content="' . $primary. '">';
+	echo '<meta name="msapplication-navbutton-color" content="' . $primary. '">';
+	echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $primary. '">';
+	echo "<style>:root { --elementor-color-accent: $accent; --elementor-color-primary: $primary; }</style>";
 
 });
 

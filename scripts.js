@@ -1,7 +1,7 @@
 (function($) {
     $(function() {
 	/* ------------------- START VARIATION BUTTONS -------------------------- */
-
+    /*
 	$('.variations_buttons').remove();
 	$('<div class="variations_buttons">').insertBefore($('.variations').closest('form'));
 
@@ -36,7 +36,7 @@
 		$(this).closest(".attribute_buttons").find('.button').removeClass('active');
 		$(this).addClass('active');
 	});
-
+    */
 	/* ------------------- END VARIATION BUTTONS -------------------------- */
 
 
