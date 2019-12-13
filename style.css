@@ -10,6 +10,26 @@ Updated: 2017-04-26 21:00:00
 
 @charset "UTF-8";
 
+body {
+	font-family: var(--elementor-typo-family-body);
+	font-weight: var(--elementor-typo-weight-body);
+}
+
+h1 {
+	font-family: var(--elementor-typo-family-header);
+	font-weight: var(--elementor-typo-weight-header);
+}
+
+h2,h3,h4,h4 {
+	font-family: var(--elementor-typo-family-secondary);
+	font-weight: var(--elementor-typo-weight-secondary);
+}
+
+em,b,strong,i{
+	font-family: var(--elementor-typo-family-accent);
+	font-weight: var(--elementor-typo-weight-accent);
+}
+
 a {
     color: var(--elementor-color-primary)
 }
@@ -21,9 +41,8 @@ a:active {
 }
 
 
-a .woocommerce-loop-product__title {
-    color: #242424;
-}
+
+
 
 .woocommerce div.product p.price,
 .woocommerce div.product span.price,
