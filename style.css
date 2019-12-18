@@ -25,10 +25,15 @@ h2,h3,h4,h4 {
 	font-weight: var(--elementor-typo-weight-secondary);
 }
 
-em,b,strong,i{
+em,i{
 	font-family: var(--elementor-typo-family-accent);
 	font-weight: var(--elementor-typo-weight-accent);
 }
+b,strong{
+	font-family: var(--elementor-typo-family-accent);
+	font-weight: bold;
+}
+
 
 a {
     color: var(--elementor-color-primary)
