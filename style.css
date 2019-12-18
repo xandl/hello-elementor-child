@@ -33,7 +33,7 @@ b,strong{
 	font-family: var(--elementor-typo-family-accent);
 	font-weight: bold;
 }
-small { font-size: 0.75em }
+small { font-size: 0.5em }
 
 
 a {
