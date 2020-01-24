@@ -76,6 +76,10 @@ add_action('wp_head', function() {
 
 });
 
+add_action( 'wp_enqueue_scripts', function() {
+	wp_enqueue_style('font-awesome');
+}, 100);
+
 add_filter( 'wp_theme_editor_filetypes', function( $allowed_types, $theme ) {
         $allowed_types[] = 'js';
         return $allowed_types;
