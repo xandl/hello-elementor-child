@@ -67,10 +67,10 @@ add_action('wp_head', function() {
 		--elementor-typo-family-body: '".$typography[3]['font_family']."';
 		--elementor-typo-family-accent: '".$typography[4]['font_family']."';
 
-		--elementor-typo-weight-header: '".$typography[1]['font_weight']."';
-		--elementor-typo-weight-secondary: '".$typography[2]['font_weight']."';
-		--elementor-typo-weight-body: '".$typography[3]['font_weight']."';
-		--elementor-typo-weight-accent: '".$typography[4]['font_weight']."';
+		--elementor-typo-weight-header: ".$typography[1]['font_weight'].";
+		--elementor-typo-weight-secondary: ".$typography[2]['font_weight'].";
+		--elementor-typo-weight-body: ".$typography[3]['font_weight'].";
+		--elementor-typo-weight-accent: ".$typography[4]['font_weight'].";
 	}</style>";
 
 
