@@ -8,11 +8,17 @@ add_action( 'wp_enqueue_scripts', function() {
     $parent_style = 'hello-elementor';
 
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'ran-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array( $parent_style ),
-        filemtime(__DIR__.'/style.css')
-    );
+
+    $colors = (get_option('elementor_disable_color_schemes') != "yes");
+    $typo = (get_option('elementor_disable_typography_schemes') != "yes");
+
+    if ($colors && $typo) {
+        wp_enqueue_style( 'ran-style',
+            get_stylesheet_directory_uri() . '/style.css',
+            array( $parent_style ),
+            filemtime(__DIR__.'/style.css')
+        );
+    }
 
     wp_enqueue_script(
         'ran-script',
@@ -42,36 +48,46 @@ add_action( 'wp_enqueue_scripts', function() {
 
 
 add_action('wp_head', function() {
-	$scheme_colors = get_option('elementor_scheme_color');
+    $colors = (get_option('elementor_disable_color_schemes') != "yes");
 
-	$accent = $scheme_colors[4];
-	$primary = $scheme_colors[1];
-	$secondary = $scheme_colors[2];
-	$text = $scheme_colors[3];
+    if ($colors) {
+        $scheme_colors = get_option('elementor_scheme_color');
 
-	$typography = get_option('elementor_scheme_typography');
-
-	echo '<meta name="theme-color" content="' . $primary. '">';
-	echo '<meta name="msapplication-navbutton-color" content="' . $primary. '">';
-	echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $primary. '">';
+        $accent = $scheme_colors[4];
+        $primary = $scheme_colors[1];
+        $secondary = $scheme_colors[2];
+        $text = $scheme_colors[3];
 
 
-	echo "<style>:root {
-		--elementor-color-accent: $accent;
-		--elementor-color-primary: $primary;
-		--elementor-color-secondary: $secondary;
-		--elementor-color-text: $text;
+        echo '<meta name="theme-color" content="' . $primary. '">';
+        echo '<meta name="msapplication-navbutton-color" content="' . $primary. '">';
+        echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $primary. '">';
 
-		--elementor-typo-family-header: '".$typography[1]['font_family']."';
-		--elementor-typo-family-secondary: '".$typography[2]['font_family']."';
-		--elementor-typo-family-body: '".$typography[3]['font_family']."';
-		--elementor-typo-family-accent: '".$typography[4]['font_family']."';
+        echo "<style>:root {
+            --elementor-color-accent: $accent;
+            --elementor-color-primary: $primary;
+            --elementor-color-secondary: $secondary;
+            --elementor-color-text: $text;
+        }</style>";
+    }
 
-		--elementor-typo-weight-header: ".$typography[1]['font_weight'].";
-		--elementor-typo-weight-secondary: ".$typography[2]['font_weight'].";
-		--elementor-typo-weight-body: ".$typography[3]['font_weight'].";
-		--elementor-typo-weight-accent: ".$typography[4]['font_weight'].";
-	}</style>";
+
+    $typo = (get_option('elementor_disable_typography_schemes') != "yes");
+    if ($typo) {
+        $typography = get_option('elementor_scheme_typography');
+
+        echo "<style>:root {
+            --elementor-typo-family-header: '".$typography[1]['font_family']."';
+            --elementor-typo-family-secondary: '".$typography[2]['font_family']."';
+            --elementor-typo-family-body: '".$typography[3]['font_family']."';
+            --elementor-typo-family-accent: '".$typography[4]['font_family']."';
+
+            --elementor-typo-weight-header: ".$typography[1]['font_weight'].";
+            --elementor-typo-weight-secondary: ".$typography[2]['font_weight'].";
+            --elementor-typo-weight-body: ".$typography[3]['font_weight'].";
+            --elementor-typo-weight-accent: ".$typography[4]['font_weight'].";
+        }</style>";
+    }
 
 
 });
