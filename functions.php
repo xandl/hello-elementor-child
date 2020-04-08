@@ -11,13 +11,16 @@ add_action( 'wp_enqueue_scripts', function() {
 
     $colors = (get_option('elementor_disable_color_schemes') != "yes");
     $typo = (get_option('elementor_disable_typography_schemes') != "yes");
+    $parent_styles = [ $parent_style ];
 
+	
     if ($colors && $typo) {
         wp_enqueue_style( 'ran-style',
             get_stylesheet_directory_uri() . '/style.css',
-            array( $parent_style ),
+            $parent_styles,
             filemtime(__DIR__.'/style.css')
         );
+	$parent_styles[]= 'ran-style';
     }
 
     wp_enqueue_script(
@@ -30,7 +33,7 @@ add_action( 'wp_enqueue_scripts', function() {
     foreach(glob(__DIR__."/functions.d/*.css") as $include) {
 	    wp_enqueue_style( 'ran-style-'.basename($include),
 		get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
-		array( $parent_style, 'ran-style' ),
+		$parent_styles,
 		filemtime($include)
 	    );
     }
