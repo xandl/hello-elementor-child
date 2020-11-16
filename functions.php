@@ -3,25 +3,52 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
+function ran_elementor_data() {
+	$id = get_option('elementor_active_kit');
+	$colors = [
+		'primary' => '',
+		'secondary' => '',
+		'text' => '',
+		'accent' => '',
+	];
+	$fonts = [];
+	if (!$id) {
+		$scheme_colors = get_option('elementor_scheme_color');
+    	$colors = [
+			'primary' => $scheme_colors[1],
+			'secondary' => $scheme_colors[2],
+			'text' => $scheme_colors[3],
+			'accent' => $scheme_colors[4],
+		]; ;
+	} else {
+		$data = get_post_meta($id, '_elementor_page_settings', true);
+		foreach($data['system_colors'] as $color) {
+			$colors[$color['_id']] = $color['color'];
+		}
+		foreach($data['custom_colors'] as $color) {
+			$colors[$color['_id']] = $color['color'];
+		}
+	}
+	
+	return [
+		'colors' => $colors,
+		'fonts' => $fonts
+	];
+}
+
 add_action( 'wp_enqueue_scripts', function() {
 
     $parent_style = 'hello-elementor';
 
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 
-    $colors = (get_option('elementor_disable_color_schemes') != "yes");
-    $typo = (get_option('elementor_disable_typography_schemes') != "yes");
-    $parent_styles = [ $parent_style ];
-
-	
-    if ($colors && $typo) {
-        wp_enqueue_style( 'ran-style',
-            get_stylesheet_directory_uri() . '/style.css',
-            $parent_styles,
-            filemtime(__DIR__.'/style.css')
-        );
-	$parent_styles[]= 'ran-style';
-    }
+    wp_enqueue_style( 'ran-style',
+        get_stylesheet_directory_uri() . '/style.css',
+        $parent_styles,
+        filemtime(__DIR__.'/style.css')
+    );
+    $parent_styles[]= 'ran-style';
+  
 
     wp_enqueue_script(
         'ran-script',
@@ -51,47 +78,13 @@ add_action( 'wp_enqueue_scripts', function() {
 
 
 add_action('wp_head', function() {
-    $colors = (get_option('elementor_disable_color_schemes') != "yes");
-
-    if ($colors) {
-        $scheme_colors = get_option('elementor_scheme_color');
-
-        $accent = $scheme_colors[4];
-        $primary = $scheme_colors[1];
-        $secondary = $scheme_colors[2];
-        $text = $scheme_colors[3];
-
-
-        echo '<meta name="theme-color" content="' . $primary. '">';
-        echo '<meta name="msapplication-navbutton-color" content="' . $primary. '">';
-        echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $primary. '">';
-
-        echo "<style>:root {
-            --elementor-color-accent: $accent;
-            --elementor-color-primary: $primary;
-            --elementor-color-secondary: $secondary;
-            --elementor-color-text: $text;
-        }</style>";
-    }
-
-
-    $typo = (get_option('elementor_disable_typography_schemes') != "yes");
-    if ($typo) {
-        $typography = get_option('elementor_scheme_typography');
-
-        echo "<style>:root {
-            --elementor-typo-family-header: '".$typography[1]['font_family']."';
-            --elementor-typo-family-secondary: '".$typography[2]['font_family']."';
-            --elementor-typo-family-body: '".$typography[3]['font_family']."';
-            --elementor-typo-family-accent: '".$typography[4]['font_family']."';
-
-            --elementor-typo-weight-header: ".$typography[1]['font_weight'].";
-            --elementor-typo-weight-secondary: ".$typography[2]['font_weight'].";
-            --elementor-typo-weight-body: ".$typography[3]['font_weight'].";
-            --elementor-typo-weight-accent: ".$typography[4]['font_weight'].";
-        }</style>";
-    }
-
+  
+    $data  = ran_elementor_data();
+	
+    echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+    echo '<meta name="theme-color" content="' . $data['colors']['primary']. '">';
+    echo '<meta name="msapplication-navbutton-color" content="' . $data['colors']['primary']. '">';
+    echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $data['colors']['primary']. '">';
 
 });
 
