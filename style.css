@@ -1,53 +1,51 @@
 /*
-Theme Name: Rent-a-Ninja Elementor Child
+Theme Name: Draussen
 Theme URI: https://www.rent-a-ninja.org
 Template: hello-elementor
 Author: DI Alexander Herzog
 Author URI: https://www.rent-a-ninja.org
-Version: 1.0.0
+Version: 3.0.0
 Updated: 2017-04-26 21:00:00
 */
 
 @charset "UTF-8";
 
+
 body {
-	font-family: var(--elementor-typo-family-body);
-	font-weight: var(--elementor-typo-weight-body);
+	font-family: var(--e-global-typography-text-font-family);
+	font-weight: var(--e-global-typography-text-font-weight);
 }
 
 h1 {
-	font-family: var(--elementor-typo-family-header);
-	font-weight: var(--elementor-typo-weight-header);
+	font-family: var(--e-global-typography-primary-font-family);
+	font-weight: var(--e-global-typography-primary-font-weight);
 }
 
 h2,h3,h4,h4 {
-	font-family: var(--elementor-typo-family-secondary);
-	font-weight: var(--elementor-typo-weight-secondary);
+	font-family: var(--e-global-typography-secondary-font-family);
+	font-weight: var(--e-global-typography-secondary-font-weight);
 }
 
 em,i{
-	font-family: var(--elementor-typo-family-accent);
-	font-weight: var(--elementor-typo-weight-accent);
+	font-family: var(--e-global-typography-accent-font-family);
+	font-weight: var(--e-global-typography-accent-font-weight);
 }
 b,strong{
-	font-family: var(--elementor-typo-family-accent);
+	font-family: var(--e-global-typography-accent-font-weight);
 	font-weight: bold;
 }
 small { font-size: 0.66em }
 
 
 a {
-    color: var(--elementor-color-primary)
+    color: var(--e-global-color-primary)
 }
 
 
 a:hover,
 a:active {
-    color: var(--elementor-color-accent)
+    color: var(--e-global-color-accent)
 }
-
-
-
 
 
 .woocommerce div.product p.price,
@@ -57,12 +55,12 @@ a:active {
 #add_payment_method .cart-collaterals .cart_totals .discount td,
 .woocommerce-cart .cart-collaterals .cart_totals .discount td,
 .woocommerce-checkout .cart-collaterals .cart_totals .discount td {
-    color: var(--elementor-color-accent);
+    color: var(--e-global-color-accent);
 }
 
 
 .woocommerce span.onsale {
-    background-color: var(--elementor-color-accent)
+    background-color: var(--e-global-color-accent)
 }
 
 
@@ -98,19 +96,19 @@ p.demo_store,
 .woocommerce input.button.alt:disabled[disabled]:hover,
 .woocommerce .widget_price_filter .ui-slider .ui-slider-handle,
 .woocommerce .widget_price_filter .ui-slider .ui-slider-range  {
-    background-color: var(--elementor-color-primary)
+    background-color: var(--e-global-color-primary)
 }
 .woocommerce-error,
 .woocommerce-info,
 .woocommerce-message {
-    border-top: var(--elementor-color-primary)
+    border-top: var(--e-global-color-primary)
 }
 
 .woocommerce #respond input#submit.alt:hover,
 .woocommerce a.button.alt:hover,
 .woocommerce button.button.alt:hover,
 .woocommerce input.button.alt:hover  {
-    background-color: var(--elementor-color-accent);
+    background-color: var(--e-global-color-accent);
 }
 
 .woocommerce .attribute_buttons {
@@ -123,5 +121,5 @@ p.demo_store,
 .attribute_buttons .button.active,
 .attribute_buttons .button:focus,
 .attribute_buttons .button:active {
-    background: var(--elementor-color-accent) !important;
+    background: var(--e-global-color-accent) !important;
 }
