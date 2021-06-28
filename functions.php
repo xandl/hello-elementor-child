@@ -44,7 +44,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
     wp_enqueue_style( 'ran-style',
         get_stylesheet_directory_uri() . '/style.css',
-        $parent_styles,
+        [ $parent_style ],
         filemtime(__DIR__.'/style.css')
     );
     $parent_styles[]= 'ran-style';
@@ -85,6 +85,71 @@ add_action('wp_head', function() {
     echo '<meta name="theme-color" content="' . $data['colors']['primary']. '">';
     echo '<meta name="msapplication-navbutton-color" content="' . $data['colors']['primary']. '">';
     echo '<meta name="apple-mobile-web-app-status-bar-style" content="' . $data['colors']['primary']. '">';
+
+    $id = get_option('elementor_active_kit');
+    if ($id) {
+        $data = array_merge([
+            'viewport_mobile' => 767,
+            'viewport_tablet' => 1024,
+        ], get_post_meta($id, '_elementor_page_settings', true));
+
+        $colors = array_merge($data['system_colors'], $data['custom_colors']);
+
+        echo '<style>';
+        echo ':root {' . "\n";
+        foreach ($colors as $ofs => $color) {
+            $slug = sanitize_title($color['title']);
+            $colors[$ofs]['slug'] = $slug;
+            echo '--e-global-color-' . $slug . ': ' . $color['color'] . ';' . "\n";
+        }
+        echo '}' . "\n";
+        foreach ($colors as $color) {
+            echo '.color-' . $color['slug'] . '{ color: var(--e-global-color-' . $color['slug'] . '); }' . "\n";
+            echo '.bg-' . $color['slug'] . '{ background-color: var(--e-global-color-' . $color['slug'] . '); }' . "\n";
+        }
+
+        $typos = array_merge($data['system_typography'], $data['custom_typography']);
+        foreach ($typos as $typo) {
+            $slug = sanitize_title($typo['title']);
+            echo '.typo-' . $slug . ' {';
+            if (isset($typo['typography_font_family'])) {
+                echo 'font-family: "' . $typo['typography_font_family'] . '"; ';
+            }
+            if (isset($typo['typography_font_size'])) {
+                echo 'font-size:' . $typo['typography_font_size']['size'] . $typo['typography_font_size']['unit'] . '; ';
+            }
+            if (isset($typo['typography_line_height'])) {
+                echo 'line-height:' . $typo['typography_line_height']['size'] . $typo['typography_line_height']['unit'] . '; ';
+            }
+            if (isset($typo['typography_font_weight'])) {
+                echo 'font-weight:' . $typo['typography_font_weight'] . '; ';
+            }
+            if (isset($typo['typography_font_style'])) {
+                echo 'font-style:' . $typo['typography_font_style'] . '; ';
+            }
+            echo '}';
+
+            echo "\n";
+        }
+        foreach (['tablet', 'mobile'] as $size) {
+            echo '@media screen and (max-width: ' . $data['viewport_' . $size] . 'px) {' . "\n";
+            foreach ($typos as $typo) {
+                $slug = sanitize_title($typo['title']);
+                echo '.typo-' . $slug . ' {';
+                if (isset($typo['typography_font_size_' . $size])) {
+                    echo 'font-size:' . $typo['typography_font_size_' . $size]['size'] . $typo['typography_font_size_' . $size]['unit'] . '; ';
+                }
+                if ($typo['typography_line_height_' . $size]) {
+                    echo 'line-height:' . $typo['typography_line_height_' . $size]['size'] . $typo['typography_line_height_' . $size]['unit'] . '; ';
+                }
+                echo '}';
+                echo "\n";
+            }
+            echo '}' . "\n";
+        }
+        echo '</style>';
+
+    }
 
 });
 
