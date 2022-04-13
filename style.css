@@ -123,3 +123,25 @@ p.demo_store,
 .attribute_buttons .button:active {
     background: var(--e-global-color-accent) !important;
 }
+
+
+.elementor-menu-cart__main .elementor-menu-cart__footer-buttons,
+.elementor-menu-cart__main .woocommerce-mini-cart .delivery-time-info,
+.elementor-menu-cart__main .woocommerce-mini-cart .variation,
+.elementor-menu-cart__main .woocommerce-mini-cart dd,
+.elementor-menu-cart__main .woocommerce-mini-cart dt {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.elementor-menu-cart__main .woocommerce-mini-cart dd {
+    text-align: right;
+}
+.elementor-menu-cart__main .elementor-menu-cart__footer-buttons a {
+     display: block;
+     margin: 1em 0;
+}
+.elementor-menu-cart__main .elementor-menu-cart__footer-buttons a.elementor-button--checkout {
+    background:  var(--e-global-color-primary);
+    text-transform:uppercase;
+}
