@@ -41,14 +41,14 @@ add_action( 'wp_enqueue_scripts', function() {
     $parent_style = 'hello-elementor';
 
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
+    $parent_styles = [ $parent_style ];
 
     wp_enqueue_style( 'ran-style',
         get_stylesheet_directory_uri() . '/style.css',
-        [ $parent_style ],
+        $parent_styles,
         filemtime(__DIR__.'/style.css')
     );
-    $parent_styles[]= 'ran-style';
-  
+    $parent_styles[] = 'ran-style';
 
     wp_enqueue_script(
         'ran-script',
@@ -58,18 +58,19 @@ add_action( 'wp_enqueue_scripts', function() {
     );
 
     foreach(glob(__DIR__."/functions.d/*.css") as $include) {
-	    wp_enqueue_style( 'ran-style-'.basename($include),
-		get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
-		$parent_styles,
-		filemtime($include)
+	    wp_enqueue_style(
+            'ran-style-'.basename($include),
+            get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
+            $parent_styles,
+            filemtime($include)
 	    );
     }
     foreach(glob(__DIR__."/functions.d/*.js") as $include) {
 	    wp_enqueue_script(
-		'ran-script-'.basename($include),
-		get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
-		array( 'jquery', 'ran-script' ),
-		filemtime($include)
+            'ran-script-'.basename($include),
+            get_stylesheet_directory_uri() . '/functions.d/'.basename($include),
+            array( 'jquery', 'ran-script' ),
+            filemtime($include)
 	    );
     }
 
@@ -139,7 +140,7 @@ add_action('wp_head', function() {
                 if (isset($typo['typography_font_size_' . $size])) {
                     echo 'font-size:' . $typo['typography_font_size_' . $size]['size'] . $typo['typography_font_size_' . $size]['unit'] . '; ';
                 }
-                if ($typo['typography_line_height_' . $size]) {
+                if (isset($typo['typography_line_height_' . $size])) {
                     echo 'line-height:' . $typo['typography_line_height_' . $size]['size'] . $typo['typography_line_height_' . $size]['unit'] . '; ';
                 }
                 echo '}';
