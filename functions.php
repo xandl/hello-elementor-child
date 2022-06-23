@@ -14,14 +14,18 @@ function ran_elementor_data() {
 	$fonts = [];
 	if (!$id) {
 		$scheme_colors = get_option('elementor_scheme_color');
-    	$colors = [
+    		$colors = [
 			'primary' => $scheme_colors[1],
 			'secondary' => $scheme_colors[2],
 			'text' => $scheme_colors[3],
 			'accent' => $scheme_colors[4],
 		]; ;
 	} else {
-		$data = get_post_meta($id, '_elementor_page_settings', true);
+		$data = array_merge([
+			'system_colors': [],
+			'custom_colors': []
+		], get_post_meta($id, '_elementor_page_settings', true) ?: []);
+		
 		foreach($data['system_colors'] as $color) {
 			$colors[$color['_id']] = $color['color'];
 		}
@@ -92,7 +96,11 @@ add_action('wp_head', function() {
         $data = array_merge([
             'viewport_mobile' => 767,
             'viewport_tablet' => 1024,
-        ], get_post_meta($id, '_elementor_page_settings', true));
+            'system_colors' => [],
+            'custom_colors' => [],
+            'system_typography' => [],
+            'custom_typography' => []
+        ], get_post_meta($id, '_elementor_page_settings', true) ?: [] );
 
         $colors = array_merge($data['system_colors'], $data['custom_colors']);
 
