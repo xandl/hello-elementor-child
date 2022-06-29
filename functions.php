@@ -100,7 +100,7 @@ add_action('wp_head', function() {
             'custom_colors' => [],
             'system_typography' => [],
             'custom_typography' => []
-        ], get_post_meta($id, '_elementor_page_settings', true) ?: [] );
+        ], get_post_meta($id, '_elementor_page_settings', true) ?: [] );
 
         $colors = array_merge( $data['system_colors'], $data['custom_colors'] );
 	    
