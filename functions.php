@@ -22,8 +22,8 @@ function ran_elementor_data() {
 		]; ;
 	} else {
 		$data = array_merge([
-			'system_colors': [],
-			'custom_colors': []
+			'system_colors' => [],
+			'custom_colors' => []
 		], get_post_meta($id, '_elementor_page_settings', true) ?: []);
 		
 		foreach($data['system_colors'] as $color) {
@@ -102,8 +102,8 @@ add_action('wp_head', function() {
             'custom_typography' => []
         ], get_post_meta($id, '_elementor_page_settings', true) ?: [] );
 
-        $colors = array_merge($data['system_colors'], $data['custom_colors']);
-
+        $colors = array_merge( $data['system_colors'], $data['custom_colors'] );
+	    
         echo '<style>';
         echo ':root {' . "\n";
         foreach ($colors as $ofs => $color) {
