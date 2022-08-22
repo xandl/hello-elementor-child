@@ -111,4 +111,16 @@ add_action( 'wp_print_styles',  function() {
       $wp_styles->registered[$handle]->src = ran_handle_gfonts($reg_handle->src);
     }
   
-  });
+});
+
+add_filter( 'wp_resource_hints', function( $urls, $type ) {
+    if ($type != "dns-prefetch") return $urls;
+
+    foreach($urls as $ofs => $url) {
+        if (strpos($url, 'fonts.googleapis.com') === false) continue;
+        unset($urls[$ofs]);
+        break;
+    }
+ 
+    return $urls;
+}, 10, 2 );
