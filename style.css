@@ -31,7 +31,7 @@ em,i{
 	font-weight: var(--e-global-typography-accent-font-weight);
 }
 b,strong{
-	font-family: var(--e-global-typography-accent-font-weight);
+	font-family: var(--e-global-typography-accent-font-family);
 	font-weight: bold;
 }
 small { font-size: 0.66em }
