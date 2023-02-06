@@ -5,7 +5,7 @@ function ran_handle_gfonts($src) {
     
     $transient_key = "ongema_webfonts_heroku";
     if (false === ($font_list = get_transient($transient_key))) {
-        $api_url = 'https://google-webfonts-helper.herokuapp.com/api/fonts';
+        $api_url = 'https://gwfh.mranftl.com/api/fonts';
         $json_list = json_decode(file_get_contents($api_url));
         $font_list = [];
         foreach ($json_list as $font) {
@@ -33,13 +33,15 @@ function ran_handle_gfonts($src) {
 
     foreach ($families as $family) {
         list($family, $sizes) = explode(':', $family);
-        $font = $font_list[$family];
+        $font = $font_list[$family] ?? null;
+        
+        if (!$font) continue;
 
         $subsets = array_intersect(['latin-ext', 'latin'], $font->subsets);
         $sizes = $font->variants;
 
         $basename = $font->id . '-' . $font->version . '-' . implode('_', $subsets);
-        $download = 'https://google-webfonts-helper.herokuapp.com/api/fonts/' . rawurlencode($font->id) . '?download=zip&subsets=' . implode(',', $subsets) . '&variants=' . implode(',', $sizes);
+        $download = 'https://gwfh.mranftl.com/api/fonts/' . rawurlencode($font->id) . '?download=zip&subsets=' . implode(',', $subsets) . '&variants=' . implode(',', $sizes);
 
 
         $targetdir = $gpath . $basename . '/';
